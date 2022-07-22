@@ -4,9 +4,9 @@ const GameBoard = (function () {
     //represents board on website
     let board = [['0', '1', '2'],['3', '4', '5'],['6', '7', '8']];
     /*         col     col     col
-      row  0   0,0     1,0     2,0       
-      row  1   0,1     1,1     2,1
-      row  2   0,2     1,2     2,2
+      row  0   0,0     0,1     0,2       -> row, col
+      row  1   1,0     1,1     1,2       -> row, col
+      row  2   2,0     2,1     2,2       -> row, col
     */
 
     function getboard() {
@@ -29,7 +29,9 @@ const GameBoard = (function () {
 const players = (function () {
     const playerName1 = document.querySelector(".playerOneName").value || "player 1";
     const playerName2 = document.querySelector(".playerTwoName").value || "player 2";
-    
+    //names are always player1 and player2 respectively as there is not even a chance to type something in, whoops
+    //change that later.
+    //also, maybe add something to reset the names once reset button is clicked.
     let player1 = {
         name: playerName1,
         symbol: "X",
@@ -43,11 +45,12 @@ const players = (function () {
     return { player1, player2 };
 
 })();
-console.log(players);
 
 //manage gameflow
 const displayControl = (function () {
     let symbolsAdded = [];
+    const winDrawOutput = document.querySelector(".win");//select field for output.
+
     //get all 9 tiles:
     const tile0 = document.querySelector(".tile.zero");
     const tile1 = document.querySelector(".tile.one");
@@ -76,8 +79,10 @@ const displayControl = (function () {
         //add reset button, on click, reset board and array for board.
         GameBoard.resetboard();
         symbolsAdded = [];//reset symbols added as well.
-        resetView();
+        resetView();//reset content of all tiles.
+        winDrawOutput.textContent = "";//reset output field
     }
+    //on click, reset everything.
     const resetButton = document.querySelector(".reset");
     resetButton.addEventListener("click", () => {
         reset();
@@ -88,6 +93,7 @@ const displayControl = (function () {
     tile0.addEventListener("click", () => {
         if(tile0.textContent === "") {//if empty, add symbol, otherwise dont
             tile0.textContent = currentPlayerSymbol();//placeholder for now
+            //update board array too. -> GameBoard.setboard(position);
         }
     });
     
@@ -99,11 +105,58 @@ const displayControl = (function () {
     });
 
     function checkForWin() {
-        //check
-        //if win -> update win fild, yet to be created
-
-        const winDrawOutput = document.querySelector(".win");//select field for output.
         
+        //if win -> update win fild, yet to be created
+        //check for win on array here, not the actual board on the site:
+        
+        /*
+            what is possible?
+            -> horizontal win -> xxx/ooo: dont just check for occupied, check that symbols match
+                                    -> 0,0 and 0,1 and 0,2 -> first row horiz. win
+                                    -> 1,0 and 1,1 and 1,2 -> sec. row horiz. win
+                                    -> 2,0 and 2,1 and 2,2 -> third row horiz. win
+            -> vertical win -> 
+                                    -> 0,0 and 1,0 and 2,0 -> first col
+                                    -> 0,1 and 1,1 and 2,1 -> second col
+                                    -> 0,2 and 1,2 and 2,2 -> third col
+            -> diagonal win ->
+                                    -> 0,0 and 1,1 and 2,2 -> top left to bottom right or vice versa
+                                    -> 2,0 and 1,1 and 0,2 -> bottom left to top right or vice versa
+
+            -> draw -> everyting occupied but no win registered.
+        */
+
+        const board = GameBoard.getboard();//get board.
+        //x win horizontal:
+        if((board[0,0] === "X" && board[0,1] === "X" && board[0,2] === "X") ||
+           (board[1,0] === "X" && board[1,1] === "X" && board[1,2] === "X") ||
+           (board[2,0] === "X" && board[2,1] === "X" && board[2,2] === "X") ||
+           (board[0,0] === "X" && board[1,0] === "X" && board[2,0] === "X") || //x win vertical
+           (board[0,1] === "X" && board[1,1] === "X" && board[2,1] === "X") ||
+           (board[0,2] === "X" && board[1,2] === "X" && board[2,2] === "X") ||
+           (board[0,0] === "X" && board[1,1] === "X" && board[2,2] === "X") || //x win diagonal
+           (board[2,0] === "X" && board[1,1] === "X" && board[0,2] === "X")) {
+
+                winDrawOutput.textContent = `${players.player1.name} wins!`; //X wins
+        } //same for O:
+        else if ((board[0,0] === "X" && board[0,1] === "X" && board[0,2] === "X") ||
+                (board[1,0] === "X" && board[1,1] === "X" && board[1,2] === "X") ||
+                (board[2,0] === "X" && board[2,1] === "X" && board[2,2] === "X") ||
+                (board[0,0] === "X" && board[1,0] === "X" && board[2,0] === "X") || //x win vertical
+                (board[0,1] === "X" && board[1,1] === "X" && board[2,1] === "X") ||
+                (board[0,2] === "X" && board[1,2] === "X" && board[2,2] === "X") ||
+                (board[0,0] === "X" && board[1,1] === "X" && board[2,2] === "X") || //x win diagonal
+                (board[2,0] === "X" && board[1,1] === "X" && board[0,2] === "X")) {
+
+             winDrawOutput.textContent = `${players.player2.name} wins!`; //O wins
+
+        }//else if everything is occupied but no win has been registered -> draw
+        else if(board[0,0] !== "0" && board[0,1] !== "1" && board[0,2] !== "2" &&
+                board[1,0] !== "3" && board[1,1] !== "4" && board[1,2] !== "5" &&
+                board[2,0] !== "6" && board[2,1] !== "7" && board[2,2] !== "8") {
+
+                    winDrawOutput.textContent = "It's a draw!";
+                }
     }
 
     //toggle between symbols -> player turns...

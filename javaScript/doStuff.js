@@ -101,6 +101,9 @@ const displayControl = (function () {
     function checkForWin() {
         //check
         //if win -> update win fild, yet to be created
+
+        const winDrawOutput = document.querySelector(".win");//select field for output.
+        
     }
 
     //toggle between symbols -> player turns...

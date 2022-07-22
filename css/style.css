@@ -30,6 +30,11 @@
     width: 8rem;
     height: 8rem;
     border: 5px solid grey;
+
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
 }
 
 .tile.zero {

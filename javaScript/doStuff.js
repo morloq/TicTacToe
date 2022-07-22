@@ -8,6 +8,7 @@ const GameBoard = (function () {
       row  1   0,1     1,1     2,1
       row  2   0,2     1,2     2,2
     */
+
     function getboard() {
         return board;
     }
@@ -25,24 +26,28 @@ const GameBoard = (function () {
 })();
 
 //create and manage players
-const players = (function (name1, name2) {
+const players = (function () {
+    const playerName1 = document.querySelector(".playerOneName").value || "player 1";
+    const playerName2 = document.querySelector(".playerTwoName").value || "player 2";
+    
     let player1 = {
-        name: name1,
+        name: playerName1,
         symbol: "X",
     }
 
     let player2 = {
-        name: name2,
+        name: playerName2,
         symbol: "O",
     }
 
-    return {player1, player2};
+    return { player1, player2 };
 
 })();
+console.log(players);
 
 //manage gameflow
 const displayControl = (function () {
-    
+    let symbolsAdded = [];
     //get all 9 tiles:
     const tile0 = document.querySelector(".tile.zero");
     const tile1 = document.querySelector(".tile.one");
@@ -54,9 +59,37 @@ const displayControl = (function () {
     const tile7 = document.querySelector(".tile.seven");
     const tile8 = document.querySelector(".tile.eight");
 
+    //reset functionality:
+    function resetView() {
+        tile0.textContent = "";
+        tile1.textContent = "";
+        tile2.textContent = "";
+        tile3.textContent = "";
+        tile4.textContent = "";
+        tile5.textContent = "";
+        tile6.textContent = "";
+        tile7.textContent = "";
+        tile8.textContent = "";
+    }
+
+    function reset() {
+        //add reset button, on click, reset board and array for board.
+        GameBoard.resetboard();
+        resetView();
+    }
+    const resetButton = document.querySelector(".reset");
+    resetButton.addEventListener("click", () => {
+        reset();
+        resetView();
+    });
+
+    //add event listeners:
+    tile0.addEventListener("click", () => {
+        tile0.textContent = players.player1.symbol;
+    });
 
     function addSymbolToTile() {
-        alert("click");
+        console.log(`click`);
     }
 
     function checkForWin() {
@@ -64,8 +97,5 @@ const displayControl = (function () {
         //if win -> update win fild, yet to be created
     }
 
-    function reset() {
-        //add reset button, on click, reset board and array for board.
-    }
 
 })();

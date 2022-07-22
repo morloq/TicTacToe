@@ -14,7 +14,7 @@ let GameBoard = (function () {
     const tile8 = document.querySelector(".tile.eight");
 
     init();
-    console.log(board)
+
     function init() {//set tiles to array positions
         board.push(tile0);
         board.push(tile1);
@@ -26,6 +26,20 @@ let GameBoard = (function () {
         board.push(tile7);
         board.push(tile8);
     }
+
+    //add click events to tiles.
+    function listeners() {
+        board.forEach(function(tile) {
+            tile.addEventListener("click", addSymbol());
+        });
+    }
+
+    listeners();
+
+    function addSymbol() {
+        alert("clicked");
+    }
+
     return {
 
     }
@@ -47,5 +61,5 @@ let players = (function () {
 
 //manage gameflow
 let displayControl = (function () {
-
-})(GameBoard, players);
+    
+})();

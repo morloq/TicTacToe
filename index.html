@@ -6,13 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic Tac Toe</title>
     <link rel="stylesheet" href="./css/style.css">
-    <script defer src="./javaScript/doStuff.js" type="javascript/text"></script>
+    <script defer src="./javaScript/doStuff.js"></script>
 </head>
 <body>
     <div class="wrapper">
         <div class="title">
             <h1 style="color:darkblue;">Tic-Tac-Toe</h1>
         </div>
+
+        <div class="playerInfo">
+            <form action="/">
+                <input type="text" placeholder="Player One Name">
+                <input type="text" placeholder="Player Two Name">
+            </form>
+        </div>
+
         <div class="gridContainer">
             <div class="board">
                 <div class="tile zero"></div>
@@ -26,6 +34,9 @@
                 <div class="tile eight"></div>
             </div>
         </div>
+
+        <div class="win"></div>
+        <button type="button "class="reset">Reset?</button>
     </div>
 </body>
 </html>

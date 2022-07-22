@@ -1,5 +1,6 @@
+//create and manage gameboard
 let GameBoard = (function () {
-    let gameBoard = [9];
+    let board = [9];
 
     //get all 9 tiles:
     const tile0 = document.querySelector(".tile.zero");
@@ -13,28 +14,38 @@ let GameBoard = (function () {
     const tile8 = document.querySelector(".tile.eight");
 
     init();
-    console.log(gameBoard)
+    console.log(board)
     function init() {//set tiles to array positions
-        gameBoard.push(tile0);
-        gameBoard.push(tile1);
-        gameBoard.push(tile2);
-        gameBoard.push(tile3);
-        gameBoard.push(tile4);
-        gameBoard.push(tile5);
-        gameBoard.push(tile6);
-        gameBoard.push(tile7);
-        gameBoard.push(tile8);
+        board.push(tile0);
+        board.push(tile1);
+        board.push(tile2);
+        board.push(tile3);
+        board.push(tile4);
+        board.push(tile5);
+        board.push(tile6);
+        board.push(tile7);
+        board.push(tile8);
     }
     return {
-        
+
     }
 })();
 
+//create and manage players
+let players = (function () {
+    let player1 = {
+        name: name1,
+        symbol: "X",
+    }
 
-let player = (function () {
+    let player2 = {
+        name: name2,
+        symbol: "O",
+    }
 
-})();
+})(name1, name2);
 
+//manage gameflow
 let displayControl = (function () {
 
-})();
+})(GameBoard, players);

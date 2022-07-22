@@ -2,6 +2,7 @@
     margin: none;
     padding: none;
     border-style: border-box;
+    font-family:'Courier New', Courier, monospace;
 }
 
 .wrapper {
@@ -15,7 +16,12 @@
 
 .title {
     font-size: large;
-    font-family:'Courier New', Courier, monospace;
+    color: darkblue;
+}
+
+.title:hover {
+    color: lightseagreen;
+    transform: scale(1.1);
 }
 
 .board {
@@ -80,4 +86,30 @@
     border-left: none;
     border-right: none;
     border-bottom: none;
+}
+
+.win {
+    height: 100px;
+    width: 250px;
+}
+
+button {
+    width: 8rem;
+    height: 4rem;
+    font-size: 1.5rem;
+    border-radius: 1rem;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+input {
+    padding: 10px;
+    border-radius: 10px;
+    border-color: grey;
+}
+
+input:hover {
+    transform: scale(1.05);
 }

@@ -75,6 +75,7 @@ const displayControl = (function () {
     function reset() {
         //add reset button, on click, reset board and array for board.
         GameBoard.resetboard();
+        symbolsAdded = [];//reset symbols added as well.
         resetView();
     }
     const resetButton = document.querySelector(".reset");
@@ -85,17 +86,45 @@ const displayControl = (function () {
 
     //add event listeners:
     tile0.addEventListener("click", () => {
-        tile0.textContent = players.player1.symbol;
+        if(tile0.textContent === "") {//if empty, add symbol, otherwise dont
+            tile0.textContent = currentPlayerSymbol();//placeholder for now
+        }
     });
-
-    function addSymbolToTile() {
-        console.log(`click`);
-    }
+    
+    tile1.addEventListener("click", () => {
+        if(tile1.textContent === "") {//if empty, add symbol, otherwise dont
+            tile1.textContent = currentPlayerSymbol();//problem with function
+            console.log("clicked tile 1");
+        }
+    });
 
     function checkForWin() {
         //check
         //if win -> update win fild, yet to be created
     }
 
+    //toggle between symbols -> player turns...
+    //if symbolsAdded -> empty, so at beginning, start with X
+    //check last index of symbolsAdded -> should now be X,
+    //if it is indeed X -> next symbol added -> O
+    //repeat, if O -> next symbol -> X ... until win or board full -> draw
 
+    function currentPlayerSymbol() {
+        let symbol = "";
+       
+        if(!symbolsAdded.length) {
+            symbol = "X";//always start with X
+            symbolsAdded.push(players.player1.symbol);
+        }
+        else if(symbolsAdded[-1] === "X") { //if the last symbol added is X
+            symbol = players.player2.symbol;//O
+            symbolsAdded.push(players.player2.symbol);
+        }
+        else if(symbolsAdded[-1] === "O") { //if the last symbol added is O
+            symbol = players.player1.symbol;//X
+            symbolsAdded.push(players.player1.symbol);
+        }
+        
+        return symbol;
+    }
 })();

@@ -50,6 +50,7 @@ const players = (function () {
 const displayControl = (function () {
     let symbolsAdded = [];
     const winDrawOutput = document.querySelector(".win");//select field for output.
+    let counter = 0;
 
     //get all 9 tiles:
     const tile0 = document.querySelector(".tile.zero");
@@ -78,9 +79,10 @@ const displayControl = (function () {
     function reset() {
         //add reset button, on click, reset board and array for board.
         GameBoard.resetboard();
-        symbolsAdded = [];//reset symbols added as well.
+        //symbolsAdded = [];//reset symbols added as well.
         resetView();//reset content of all tiles.
         winDrawOutput.textContent = "";//reset output field
+        counter = 0;
     }
     //on click, reset everything.
     const resetButton = document.querySelector(".reset");
@@ -93,14 +95,108 @@ const displayControl = (function () {
     tile0.addEventListener("click", () => {
         if(tile0.textContent === "") {//if empty, add symbol, otherwise dont
             tile0.textContent = currentPlayerSymbol();//placeholder for now
-            //update board array too. -> GameBoard.setboard(position);
+            GameBoard.setboard(0,0, currentPlayerSymbol());
+            checkForWin();
+
+            console.log(GameBoard.getboard());
+
+            counter++;
         }
     });
     
     tile1.addEventListener("click", () => {
         if(tile1.textContent === "") {//if empty, add symbol, otherwise dont
-            tile1.textContent = currentPlayerSymbol();//problem with function
-            console.log("clicked tile 1");
+            tile1.textContent = currentPlayerSymbol();
+            GameBoard.setboard(0,1, currentPlayerSymbol());//set symbol to board array.
+            checkForWin();
+
+            console.log(GameBoard.getboard());
+
+            counter++;
+        }
+    });
+
+    tile2.addEventListener("click", () => {
+        if(tile2.textContent === "") {//if empty, add symbol, otherwise dont
+            tile2.textContent = currentPlayerSymbol();
+            GameBoard.setboard(0,2, currentPlayerSymbol());//set symbol to board array.
+            checkForWin();
+
+            console.log(GameBoard.getboard());
+
+            counter++;
+        }
+    });
+
+    tile3.addEventListener("click", () => {
+        if(tile3.textContent === "") {//if empty, add symbol, otherwise dont
+            tile3.textContent = currentPlayerSymbol();
+            GameBoard.setboard(1,0, currentPlayerSymbol());//set symbol to board array.
+            checkForWin();
+
+            console.log(GameBoard.getboard());
+
+            counter++;
+        }
+    });
+
+    tile4.addEventListener("click", () => {
+        if(tile4.textContent === "") {//if empty, add symbol, otherwise dont
+            tile4.textContent = currentPlayerSymbol();
+            GameBoard.setboard(1,1, currentPlayerSymbol());//set symbol to board array.
+            checkForWin();
+
+            console.log(GameBoard.getboard());
+
+            counter++;
+        }
+    });
+
+    tile5.addEventListener("click", () => {
+        if(tile5.textContent === "") {//if empty, add symbol, otherwise dont
+            tile5.textContent = currentPlayerSymbol();
+            GameBoard.setboard(1,2, currentPlayerSymbol());//set symbol to board array.
+            checkForWin();
+
+            console.log(GameBoard.getboard());
+
+            counter++;
+        }
+    });
+
+    tile6.addEventListener("click", () => {
+        if(tile6.textContent === "") {//if empty, add symbol, otherwise dont
+            tile6.textContent = currentPlayerSymbol();
+            GameBoard.setboard(2,0, currentPlayerSymbol());//set symbol to board array.
+            checkForWin();
+
+            console.log(GameBoard.getboard());
+
+            counter++;
+        }
+    });
+
+    tile7.addEventListener("click", () => {
+        if(tile7.textContent === "") {//if empty, add symbol, otherwise dont
+            tile7.textContent = currentPlayerSymbol();
+            GameBoard.setboard(2,1, currentPlayerSymbol());//set symbol to board array.
+            checkForWin();
+
+            console.log(GameBoard.getboard());
+
+            counter++;
+        }
+    });
+
+    tile8.addEventListener("click", () => {
+        if(tile8.textContent === "") {//if empty, add symbol, otherwise dont
+            tile8.textContent = currentPlayerSymbol();
+            GameBoard.setboard(2,2, currentPlayerSymbol());//set symbol to board array.
+            checkForWin();
+
+            console.log(GameBoard.getboard());
+
+            counter++;
         }
     });
 
@@ -168,17 +264,24 @@ const displayControl = (function () {
     function currentPlayerSymbol() {
         let symbol = "";
        
-        if(!symbolsAdded.length) {
-            symbol = "X";//always start with X
-            symbolsAdded.push(players.player1.symbol);
+        // if(!symbolsAdded.length) {
+        //     symbol = "X";//always start with X
+        //     symbolsAdded.push(players.player1.symbol);
+        // }
+        // else if(symbolsAdded[-1] === "X") { //if the last symbol added is X
+        //     symbol = players.player2.symbol;//O
+        //     symbolsAdded.push(players.player2.symbol);
+        // }
+        // else if(symbolsAdded[-1] === "O") { //if the last symbol added is O
+        //     symbol = players.player1.symbol;//X
+        //     symbolsAdded.push(players.player1.symbol);
+        // }
+
+        if(counter === 0 || counter % 2 === 0) {
+            symbol = players.player1.symbol;
         }
-        else if(symbolsAdded[-1] === "X") { //if the last symbol added is X
-            symbol = players.player2.symbol;//O
-            symbolsAdded.push(players.player2.symbol);
-        }
-        else if(symbolsAdded[-1] === "O") { //if the last symbol added is O
-            symbol = players.player1.symbol;//X
-            symbolsAdded.push(players.player1.symbol);
+        else if(counter % 2 !== 0) {
+            symbol = players.player2.symbol;
         }
         
         return symbol;

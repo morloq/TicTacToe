@@ -27,7 +27,7 @@ const GameBoard = (function () {
 
 //create and manage players
 const players = (function () {
-    
+
     let player1 = {
         symbol: "X",
     }
@@ -202,7 +202,7 @@ const displayControl = (function () {
            (board[0] === "X" && board[4] === "X" && board[8] === "X") || //x win diagonal
            (board[6] === "X" && board[4] === "X" && board[2] === "X")) {
 
-                winDrawOutput.textContent = `${players.player1.name} wins!`; //X wins
+                winDrawOutput.textContent = `X wins!`; //X wins
         } //same for O:
         else if ((board[0] === "X" && board[1] === "X" && board[2] === "X") ||
             (board[3] === "X" && board[4] === "X" && board[5] === "X") ||
@@ -213,7 +213,7 @@ const displayControl = (function () {
             (board[0] === "X" && board[4] === "X" && board[8] === "X") ||
             (board[6] === "X" && board[4] === "X" && board[2] === "X")) {
 
-             winDrawOutput.textContent = `${players.player2.name} wins!`; //O wins
+             winDrawOutput.textContent = `O wins!`; //O wins
 
         }//else if everything is occupied but no win has been registered -> draw
         else if(board[0] !== "0" && board[1] !== "1" && board[2] !== "2" &&

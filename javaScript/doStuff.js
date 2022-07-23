@@ -44,16 +44,6 @@ const displayControl = (function () {
     const winDrawOutput = document.querySelector(".win");//select field for output.
     let counter = 0;
 
-    let start = false;
-
-    document.querySelector(".start").addEventListener("click", () => {
-        start = true;
-    })
-
-    if (start) {
-
-    }
-
     //get all 9 tiles:
     const tile0 = document.querySelector(".tile.zero");
     const tile1 = document.querySelector(".tile.one");

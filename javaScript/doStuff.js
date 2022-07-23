@@ -62,8 +62,6 @@ const displayControl = (function () {
             GameBoard.setboard(0, currentPlayerSymbol());
             checkForWin();
 
-            console.log(GameBoard.getboard());
-
             counter++;
         }
     });
@@ -73,8 +71,6 @@ const displayControl = (function () {
             tile1.textContent = currentPlayerSymbol();
             GameBoard.setboard(1, currentPlayerSymbol());//set symbol to board array.
             checkForWin();
-
-            console.log(GameBoard.getboard());
 
             counter++;
         }
@@ -86,8 +82,6 @@ const displayControl = (function () {
             GameBoard.setboard(2, currentPlayerSymbol());//set symbol to board array.
             checkForWin();
 
-            console.log(GameBoard.getboard());
-
             counter++;
         }
     });
@@ -97,8 +91,6 @@ const displayControl = (function () {
             tile3.textContent = currentPlayerSymbol();
             GameBoard.setboard(3, currentPlayerSymbol());//set symbol to board array.
             checkForWin();
-
-            console.log(GameBoard.getboard());
 
             counter++;
         }
@@ -110,8 +102,6 @@ const displayControl = (function () {
             GameBoard.setboard(4, currentPlayerSymbol());//set symbol to board array.
             checkForWin();
 
-            console.log(GameBoard.getboard());
-
             counter++;
         }
     });
@@ -121,8 +111,6 @@ const displayControl = (function () {
             tile5.textContent = currentPlayerSymbol();
             GameBoard.setboard(5, currentPlayerSymbol());//set symbol to board array.
             checkForWin();
-
-            console.log(GameBoard.getboard());
 
             counter++;
         }
@@ -134,8 +122,6 @@ const displayControl = (function () {
             GameBoard.setboard(6, currentPlayerSymbol());//set symbol to board array.
             checkForWin();
 
-            console.log(GameBoard.getboard());
-
             counter++;
         }
     });
@@ -146,8 +132,6 @@ const displayControl = (function () {
             GameBoard.setboard(7, currentPlayerSymbol());//set symbol to board array.
             checkForWin();
 
-            console.log(GameBoard.getboard());
-
             counter++;
         }
     });
@@ -157,8 +141,6 @@ const displayControl = (function () {
             tile8.textContent = currentPlayerSymbol();
             GameBoard.setboard(8, currentPlayerSymbol());//set symbol to board array.
             checkForWin();
-
-            console.log(GameBoard.getboard());
 
             counter++;
         }

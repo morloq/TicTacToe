@@ -91,6 +91,7 @@
 .win {
     height: 100px;
     width: 250px;
+    text-align: center;
 }
 
 button {
@@ -103,18 +104,4 @@ button {
 
 button:hover {
     transform: scale(1.1);
-}
-
-input {
-    padding: 10px;
-    border-radius: 10px;
-    border-color: grey;
-}
-
-input:hover {
-    transform: scale(1.05);
-}
-
-.win {
-    text-align: center;
 }

@@ -27,24 +27,14 @@ const GameBoard = (function () {
 
 //create and manage players
 const players = (function () {
-    const name1 = document.querySelector(".playerOneName").value;
-    const name2 = document.querySelector(".playerTwoName").value;
-
-    const playerName1 = !name1.length ? "player 1" : name1;//name1.length -> false?, yes -> player 1, else name
-    const playerName2 = !name2.length ? "player 2" : name2;
-    //names are always player1 and player2 respectively as there is not even a chance to type something in, whoops
-    //change that later.
-    //also, maybe add something to reset the names once reset button is clicked.
+    
     let player1 = {
-        name: playerName1,
         symbol: "X",
     }
 
     let player2 = {
-        name: playerName2,
         symbol: "O",
     }
-
     return { player1, player2 };
 
 })();
@@ -59,6 +49,10 @@ const displayControl = (function () {
     document.querySelector(".start").addEventListener("click", () => {
         start = true;
     })
+
+    if (start) {
+
+    }
 
     //get all 9 tiles:
     const tile0 = document.querySelector(".tile.zero");

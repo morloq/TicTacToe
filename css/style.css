@@ -114,3 +114,7 @@ input {
 input:hover {
     transform: scale(1.05);
 }
+
+.win {
+    text-align: center;
+}

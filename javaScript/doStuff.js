@@ -1,14 +1,132 @@
+//big problem! directly manipulates dom elements, not good!!
+//how to use setboard function without having the elements secondary class??
+
+
 //create and manage gameboard
 const GameBoard = (function () {
 
     //represents board on website
     let board = ["0", "1", "2", "3", "4", "5", "6", "7", "8"];
-    /*         col     col     col
-      row  0   0,0     0,1     0,2       -> row, col
-      row  1   1,0     1,1     1,2       -> row, col
-      row  2   2,0     2,1     2,2       -> row, col
-    */
 
+    function getboard() {
+        return board;
+    }
+
+    function setboard(tile, value) {
+        board[tile] = value;
+    }
+
+    function resetboard() {
+        board = ["0", "1", "2", "3", "4", "5", "6", "7", "8"];
+    }
+
+    return { getboard, setboard, resetboard };
+
+})();
+
+//create and manage players
+const players = (function () {
+
+    let player1 = {
+        symbol: "X",
+    }
+
+    let player2 = {
+        symbol: "O",
+    }
+    return { player1, player2 };
+
+})();
+
+//manage gameflow
+const displayControl = (function () {
+    const winDrawOutput = document.querySelector(".win");//select field for output.
+    let counter = 0;
+
+    const tiles = document.querySelectorAll(".tile");
+    const tile_array = [... tiles];
+    
+    tile_array.forEach(tile => {
+        tile.addEventListener("click", () => {
+            if(tile.textContent === "") {
+                tile.textContent = currentPlayerSymbol();
+                checkForWin();
+                counter++;
+            }
+        });
+    })
+
+    function checkForWin() {
+        const board = GameBoard.getboard();//get board.
+        //x win horizontal:
+        if((tiles[0].textContent === "X" && tiles[1].textContent === "X" && tiles[2].textContent === "X") ||
+           (tiles[3].textContent === "X" && tiles[4].textContent === "X" && tiles[5].textContent === "X") ||
+           (tiles[6].textContent === "X" && tiles[7].textContent === "X" && tiles[8].textContent === "X") ||
+           (tiles[0].textContent === "X" && tiles[3].textContent === "X" && tiles[6].textContent === "X") || //x win vertical
+           (tiles[1].textContent === "X" && tiles[4].textContent === "X" && tiles[7].textContent === "X") ||
+           (tiles[2].textContent === "X" && tiles[5].textContent === "X" && tiles[8].textContent === "X") ||
+           (tiles[0].textContent === "X" && tiles[4].textContent === "X" && tiles[8].textContent === "X") || //x win diagonal
+           (tiles[6].textContent === "X" && tiles[4].textContent === "X" && tiles[2].textContent === "X")) {
+
+                winDrawOutput.textContent = `X wins!`; //X wins
+        } //same for O:
+        else if ((tiles[0] === "O" && tiles[1] === "O" && tiles[2] === "O") ||
+            (tiles[3].textContent === "O" && tiles[4].textContent === "O" && tiles[5].textContent === "O") ||
+            (tiles[6].textContent === "O" && tiles[7].textContent === "O" && tiles[8].textContent === "O") ||
+            (tiles[0].textContent === "O" && tiles[3].textContent === "O" && tiles[6].textContent === "O") ||
+            (tiles[1].textContent === "O" && tiles[4].textContent === "O" && tiles[7].textContent === "O") ||
+            (tiles[2].textContent === "O" && tiles[5].textContent === "O" && tiles[8].textContent === "O") ||
+            (tiles[0].textContent === "O" && tiles[4].textContent === "O" && tiles[8].textContent === "O") ||
+            (tiles[6].textContent === "O" && tiles[4].textContent === "O" && tiles[2].textContent === "O")) {
+
+             winDrawOutput.textContent = `O wins!`; //O wins
+
+        }//else if everything is occupied but no win has been registered -> draw
+        else if(tiles[0].textContent !== "" && tiles[1].textContent !== "" && tiles[2].textContent !== "" &&
+                tiles[3].textContent !== "" && tiles[4].textContent !== "" && tiles[5].textContent !== "" &&
+                tiles[6].textContent !== "" && tiles[7].textContent !== "" && tiles[8].textContent !== "") {
+                    console.log(tiles);
+                    winDrawOutput.textContent = "It's a draw!";
+                }
+    }
+
+    function currentPlayerSymbol() {
+        let symbol = "";
+        if(counter === 0 || counter % 2 === 0) {
+            symbol = players.player1.symbol;
+        }
+        else if(counter % 2 !== 0) {
+            symbol = players.player2.symbol;
+        }
+        return symbol;
+    }
+
+    //reset functionality:
+    function resetView() {
+        for(i = 0; i < tiles.length; i++) {
+            tiles[i].textContent = "";
+        }
+    }
+
+    function reset() {
+        resetView();
+        winDrawOutput.textContent = "";
+        counter = 0;
+    }
+    //on click, reset everything.
+    const resetButton = document.querySelector(".reset");
+    resetButton.addEventListener("click", () => {
+        reset();
+    });
+})();
+
+/*
+OLD VERSION:
+
+const GameBoard = (function () {
+
+    let board = ["0", "1", "2", "3", "4", "5", "6", "7", "8"];
+    
     function getboard() {
         return board;
     }
@@ -147,22 +265,7 @@ const displayControl = (function () {
     });
 
     function checkForWin() {
-        /*
-            what is possible?
-            -> horizontal win -> xxx/ooo: dont just check for occupied, check that symbols match
-                                    -> 0,0 and 0,1 and 0,2 -> first row horiz. win
-                                    -> 1,0 and 1,1 and 1,2 -> sec. row horiz. win
-                                    -> 2,0 and 2,1 and 2,2 -> third row horiz. win
-            -> vertical win -> 
-                                    -> 0,0 and 1,0 and 2,0 -> first col
-                                    -> 0,1 and 1,1 and 2,1 -> second col
-                                    -> 0,2 and 1,2 and 2,2 -> third col
-            -> diagonal win ->
-                                    -> 0,0 and 1,1 and 2,2 -> top left to bottom right or vice versa
-                                    -> 2,0 and 1,1 and 0,2 -> bottom left to top right or vice versa
-
-            -> draw -> everyting occupied but no win registered.
-        */
+        
         const board = GameBoard.getboard();//get board.
         //x win horizontal:
         if((board[0] === "X" && board[1] === "X" && board[2] === "X") ||
@@ -176,14 +279,14 @@ const displayControl = (function () {
 
                 winDrawOutput.textContent = `X wins!`; //X wins
         } //same for O:
-        else if ((board[0] === "O" && board[1] === "O" && board[2] === "O") ||
-            (board[3] === "O" && board[4] === "O" && board[5] === "O") ||
-            (board[6] === "O" && board[7] === "O" && board[8] === "O") ||
-            (board[0] === "O" && board[3] === "O" && board[6] === "O") ||
-            (board[1] === "O" && board[4] === "O" && board[7] === "O") ||
-            (board[2] === "O" && board[5] === "O" && board[8] === "O") ||
-            (board[0] === "O" && board[4] === "O" && board[8] === "O") ||
-            (board[6] === "O" && board[4] === "O" && board[2] === "O")) {
+        else if ((board[0] === "X" && board[1] === "X" && board[2] === "X") ||
+            (board[3] === "X" && board[4] === "X" && board[5] === "X") ||
+            (board[6] === "X" && board[7] === "X" && board[8] === "X") ||
+            (board[0] === "X" && board[3] === "X" && board[6] === "X") ||
+            (board[1] === "X" && board[4] === "X" && board[7] === "X") ||
+            (board[2] === "X" && board[5] === "X" && board[8] === "X") ||
+            (board[0] === "X" && board[4] === "X" && board[8] === "X") ||
+            (board[6] === "X" && board[4] === "X" && board[2] === "X")) {
 
              winDrawOutput.textContent = `O wins!`; //O wins
 
@@ -234,3 +337,5 @@ const displayControl = (function () {
         resetView();
     });
 })();
+
+*/
